@@ -3,6 +3,9 @@ import hashlib
 
 from typing import Tuple
 
+# Relevant sources:
+# https://people.eecs.berkeley.edu/~jfc/cs174/lecs/lec24/lec24.pdf
+# https://en.wikipedia.org/wiki/Fiat%E2%80%93Shamir_heuristic
 
 LARGE_PRIME = 273389558745553615023177755634264971227
 GENERATOR = 29155293994990157899330610805491402811 # random.randint(1, LARGE_PRIME)
@@ -22,7 +25,7 @@ def discreteLogProof(x, g ,p) -> Tuple[int, int]:
     r = random.randint(0, p) # prover random bit
     t = pow(g, r, p) # prover to verifier 
     c = hash_helper(g, y, t, p) # modulo to reduce size
-    s = (c * x + r) % (p - 1) # the proof
+    s = (c * x + r) % (p - 1) # the proof, (p-1) because it is phi(p). phi(p) = p-1 for any prime p.
     pf = (s, t)
     # print("Y", y)
     # print("R", r)
